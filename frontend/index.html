@@ -9,16 +9,27 @@
 </head>
 <body>
   <!-- แถบนำทาง -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light px-3 fixed-top">
-    <a class="navbar-brand" href="#">Wongnok</a>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav ms-auto" id="nav-links">
-        <li class="nav-item"><a class="nav-link" href="login.html" id="loginBtn">เข้าสู่ระบบ</a></li>
-        <li class="nav-item"><a class="nav-link" href="register.html">สมัครสมาชิก</a></li>
-      </ul>
-      <div id="userInfo" class="d-none align-items-center">
-        <span class="me-3" id="usernameDisplay"></span>
-        <button class="btn btn-outline-danger btn-sm" id="logoutBtn">ออกจากระบบ</button>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light px-3 sticky-top">
+    <div class="container-fluid">
+      <img src="https://img.icons8.com/?size=100&id=41086&format=png&color=000000" style="background-color: aliceblue;" alt="Wongnok logo">
+      <a class="navbar-brand" href="#">Wongnok</a>
+      <h6></h6>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav ms-auto" id="nav-links">
+          <li class="nav-item">
+            <a class="nav-link" href="login.html" id="loginBtn" style="text-align: center;">เข้าสู่ระบบ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="register.html" id="registerBtn" style="text-align: center;">สมัครสมาชิก</a>
+          </li>
+        </ul>
+        <div id="userInfo" class="d-none align-items-center">
+          <span class="me-3" id="usernameDisplay"></span>
+          <button class="btn btn-outline-danger btn-sm" id="logoutBtn" style="text-align: center;">ออกจากระบบ</button>
+        </div>
       </div>
     </div>
   </nav>
@@ -56,7 +67,11 @@
       <div id="recipes" class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4"></div>
     </div>
   </main>
-  <script src="main.js"><a href="recipe.html?id=1" class="btn btn-sm btn-primary">ดูรายละเอียด</a>
+
+  <script src="main.js">
+    <a href="recipe.html?id=1" class="btn btn-sm btn-primary">ดูรายละเอียด</a>
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

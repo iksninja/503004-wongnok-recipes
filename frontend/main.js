@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
   const searchForm = document.getElementById('searchForm');
   const recipesContainer = document.getElementById('recipes');
