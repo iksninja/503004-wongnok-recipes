@@ -1,0 +1,50 @@
+.navbar{
+      background-image: url('https://lineman.line.me/sellers/img/landing-banner-2@2x.90a5aa51.jpg');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      height: 20%;
+}
+body {
+    padding-top: 20%;
+    padding-bottom: 50px;
+  }
+  
+  .recipe-card img {
+    max-height: 150px;
+    object-fit: cover;
+  }
+  
+  .navbar-nav .nav-link.active {
+    font-weight: bold;
+  }
+.navlink{
+    font-size: 36px;
+}
+
+/* CSS สำหรับ star rating */
+.star-rating {
+  direction: rtl;
+  font-size: 2rem;
+  unicode-bidi: bidi-override;
+  display: inline-block;
+}
+.star-rating input[type="radio"] {
+  display: none;
+}
+.star-rating label {
+  color: #ccc;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+}
+.star-rating label::before {
+  content: "\f005"; /* FontAwesome solid star */
+  font-family: FontAwesome;
+  position: relative;
+}
+.star-rating input[type="radio"]:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: #ffc107;
+}
