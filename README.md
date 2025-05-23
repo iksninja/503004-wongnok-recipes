@@ -242,13 +242,17 @@ INSERT INTO `users` (`id`, `username`, `email`, `password_hash`, `created_at`) V
 (20, 'user20', 'user20@example.com', '$2b$10$abcdefghijklmnopqrstuv', '2025-05-19 11:02:28'),
 (22, 'test', 'test@test.com', '$2b$10$uxFStslPZ0bPdE8mx3PHdue.C5jIGw/GrB3G6r3QsOOafW71W/V5G', '2025-05-20 10:21:47');
 ```
-### 7. รันเซิร์ฟเวอร์
+### 7. รัน MAMP เพื่อ Start Server MySQL
+
+![image](https://github.com/user-attachments/assets/cd4f9f0d-e93f-44b6-90fc-1e51c83c01fd)
+
+### 8. รันเซิร์ฟเวอร์
 
 ```bash
 node app.js
 ```
 
-### 8. เปิดใช้งาน
+### 9. เปิดใช้งาน
 
 ไปที่: [http://localhost:3000](http://localhost:3000)
 
