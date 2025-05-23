@@ -49,24 +49,9 @@ cd wongnok/backend
 ```bash
 npm install
 ```
+### 3.ติดตั้งโปรแกรม MAMP สำหรับใช้งาน MySQL
 
-### 3. ตั้งค่า `.env`
-
-สร้างไฟล์ `.env` ในโฟลเดอร์ `backend/`
-
-```env
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=root
-DB_NAME=wongnok_db
-SESSION_SECRET=wongnok_super_secret
-PORT=3000
-NODE_ENV=development
-```
-
-### 4.ติดตั้งโปรแกรม MAMP สำหรับใช้งาน MySQL
-
-### 5.ตั้งค่าฐานข้อมูล
+### 4.ตั้งค่าฐานข้อมูล
 
 ```sql
 -- สร้างฐานข้อมูลและตาราง (ตัวอย่าง)
@@ -102,7 +87,7 @@ CREATE TABLE ratings (
   FOREIGN KEY (recipe_id) REFERENCES recipes(id)
 );
 ```
-### 6.Dumping data to wongnok_db
+### 5.Dumping data to wongnok_db
 Dumping data for table ratings
 ```
 INSERT INTO `ratings` (`id`, `user_id`, `recipe_id`, `rating_value`, `created_at`) VALUES
@@ -242,6 +227,20 @@ INSERT INTO `users` (`id`, `username`, `email`, `password_hash`, `created_at`) V
 (20, 'user20', 'user20@example.com', '$2b$10$abcdefghijklmnopqrstuv', '2025-05-19 11:02:28'),
 (22, 'test', 'test@test.com', '$2b$10$uxFStslPZ0bPdE8mx3PHdue.C5jIGw/GrB3G6r3QsOOafW71W/V5G', '2025-05-20 10:21:47');
 ```
+### 6. ตั้งค่า `.env`
+
+ปรับตั้งค่าไฟล์ `.env` ในโฟลเดอร์ `backend/`
+
+```env
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=root
+DB_NAME=wongnok_db
+SESSION_SECRET=wongnok_super_secret
+PORT=3000
+NODE_ENV=development
+```
+
 ### 7. รัน MAMP เพื่อ Start Server MySQL
 
 ![image](https://github.com/user-attachments/assets/cd4f9f0d-e93f-44b6-90fc-1e51c83c01fd)
