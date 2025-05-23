@@ -40,25 +40,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderRecipes(recipes) {
     if (!recipes.length) {
-      recipesList.innerHTML = '<p>ยังไม่มีสูตรอาหาร</p>';
+      recipesList.innerHTML = '<div class="text-center text-muted">ยังไม่มีสูตรอาหาร</div>';
       return;
     }
-    recipesList.innerHTML = recipes.map(r => `
-      <div class="col-md-6 col-lg-4">
-        <div class="card h-100">
-          <img src="${r.image_url || 'https://via.placeholder.com/300x200?text=No+Image'}" class="card-img-top" alt="${r.title}">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">${r.title}</h5>
-            <p class="card-text text-truncate">${r.ingredients}</p>
-            <p><small>เวลา: ${r.cook_time} | ความยาก: ${r.difficulty}</small></p>
-            <div class="mt-auto d-flex justify-content-between">
-              <button class="btn btn-sm btn-primary btn-edit" data-id="${r.id}">แก้ไข</button>
-              <button class="btn btn-sm btn-danger btn-delete" data-id="${r.id}">ลบ</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    `).join('');
+    let html = `
+      <table class="table table-bordered table-hover align-middle">
+        <thead class="table-success align-top">
+          <tr>
+            <th class="text-center">รูป</th>
+            <th class="text-center">ชื่อเมนู</th>
+            <th class="text-center">วัตถุดิบ</th>
+            <th class="text-center">ขั้นตอน</th>
+            <th class="text-center">เวลา</th>
+            <th class="text-center">ความยาก</th>
+            <th class="text-center">จัดการ</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+    recipes.forEach(r => {
+      const imageSrc = r.image_url?.startsWith('http') ? r.image_url : (r.image_url ? '.' + r.image_url : 'https://via.placeholder.com/150');
+      html += `
+        <tr>
+          <td><img src="${imageSrc}" style="max-width:80px;max-height:80px;"></td>
+          <td>${r.title}</td>
+          <td>${r.ingredients}</td>
+          <td>${r.steps}</td>
+          <td>${r.cook_time}</td>
+          <td>${r.difficulty}</td>
+          <td>
+            <button class="btn btn-sm btn-primary btn-edit" data-id="${r.id}">Edit</button>
+            <button class="btn btn-sm btn-danger btn-delete" data-id="${r.id}">Delete</button>
+          </td>
+        </tr>
+      `;
+    });
+    html += '</tbody></table>';
+    recipesList.innerHTML = html;
   }
 
   btnAddRecipe.addEventListener('click', () => {
@@ -87,10 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const res = await fetch(`/api/recipes/${id}`);
       if (!res.ok) throw new Error('ไม่พบสูตรอาหาร');
       const data = await res.json();
-      const r = data.recipe || data; // ปรับตามโครงสร้าง response
+      const r = data.recipe || data;
       document.getElementById('recipeId').value = r.id || r._id;
       document.getElementById('title').value = r.title;
-      document.getElementById('image_url').value = r.image_url || '';
+      document.getElementById('imageUrl').value = r.image_url || '';
       document.getElementById('ingredients').value = r.ingredients;
       document.getElementById('steps').value = r.steps;
       document.getElementById('cook_time').value = r.cook_time;
@@ -103,41 +121,40 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   recipeForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    formMsg.textContent = '';
-    const id = document.getElementById('recipeId').value;
-    const recipeData = {
-      title: document.getElementById('title').value.trim(),
-      image_url: document.getElementById('image_url').value.trim(),
-      ingredients: document.getElementById('ingredients').value.trim(),
-      steps: document.getElementById('steps').value.trim(),
-      cook_time: document.getElementById('cook_time').value,
-      difficulty: document.getElementById('difficulty').value,
-    };
+  e.preventDefault();
+  formMsg.textContent = '';
 
-    try {
-      let res;
-      if (id) {
-        res = await fetch(`/api/recipes/${id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(recipeData),
-        });
-      } else {
-        res = await fetch('/api/recipes', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(recipeData),
-        });
-      }
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'เกิดข้อผิดพลาด');
-      recipeModal.hide();
-      loadMyRecipes();
-    } catch (err) {
-      formMsg.textContent = err.message;
+  const title = document.getElementById('title').value.trim();
+  if (!title) {
+    formMsg.textContent = 'กรุณาใส่ชื่อเมนู';
+    return;
+  }
+
+  const id = document.getElementById('recipeId').value;
+  const formData = new FormData(recipeForm);
+
+  try {
+    let res;
+    if (id) {
+      res = await fetch(`/api/recipes/${id}`, {
+        method: 'PUT',
+        body: formData
+      });
+    } else {
+      res = await fetch('/api/recipes', {
+        method: 'POST',
+        body: formData
+      });
     }
-  });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'เกิดข้อผิดพลาด');
+    recipeModal.hide();
+    loadMyRecipes();
+  } catch (err) {
+    formMsg.textContent = err.message;
+  }
+});
+
 
   async function deleteRecipe(id) {
     try {
@@ -160,7 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = 'index.html';
   });
 
-  // เพิ่ม blur โฟกัสก่อน modal ปิด เพื่อแก้ warning accessibility
   window.addEventListener('hide.bs.modal', () => {
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
