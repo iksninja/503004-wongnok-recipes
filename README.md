@@ -50,7 +50,9 @@ cd wongnok/backend
 npm install
 ```
 ### 3.ติดตั้งโปรแกรม MAMP สำหรับใช้งาน MySQL
-
+```
+https://www.mamp.info/
+```
 ### 4.ตั้งค่าฐานข้อมูล
 
 ```sql
